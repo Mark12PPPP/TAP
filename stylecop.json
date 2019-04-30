@@ -1,0 +1,25 @@
+﻿{
+	"$schema":
+		"https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+	"settings": {
+		"documentationRules": {
+			"companyName": "Bruker BioSpin AG",
+			"copyrightText": "Copyright (c) {companyName}. All Rights Reserved. E4 Software Team.",
+			"documentExposedElements": false,
+			"documentInterfaces": false,
+			"documentInternalElements": false,
+			"documentPrivateElements": false,
+			"documentPrivateFields": false,
+			"fileNamingConvention": "metadata",
+			"xmlHeader": false
+		},
+		"layoutRules": {
+			"newlineAtEndOfFile": "require"
+		},
+		"orderingRules": {
+			"elementOrder": [],
+			"usingDirectivesPlacement": "insideNamespace",
+			"systemUsingDirectivesFirst": true
+		}
+	}
+}

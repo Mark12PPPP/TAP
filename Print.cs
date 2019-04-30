@@ -29,6 +29,7 @@ namespace TAP
             _i2cInterface = mpsseChannel as II2cReadWrite;
             _i2cConnectionSetting = new I2cConnectionSettings(0x20);
             ConfigIoExpander();
+            Console.WriteLine("marps erster push");
         }
 
         //public void SetLed()

@@ -77,6 +77,7 @@
             this.Panel_S2.Name = "Panel_S2";
             this.Panel_S2.Size = new System.Drawing.Size(76, 66);
             this.Panel_S2.TabIndex = 7;
+            this.Panel_S2.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_S2_Paint);
             // 
             // Panel_S1
             // 
@@ -112,6 +113,7 @@
             this.Panel_S3.Name = "Panel_S3";
             this.Panel_S3.Size = new System.Drawing.Size(76, 66);
             this.Panel_S3.TabIndex = 10;
+            this.Panel_S3.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_S3_Paint);
             // 
             // lbl_S3
             // 
@@ -142,6 +144,7 @@
             // Timer
             // 
             this.Timer.Enabled = true;
+            this.Timer.Interval = 1;
             this.Timer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Gui

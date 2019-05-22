@@ -29,15 +29,14 @@ namespace TAP
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            _print.ReadAdc();
             _print.ReadIoExpander();
             _print.Ausgabe7Segment(Print.Segment.Led3);
-
+            _print.SetAllLeds();
             bool buttonStateS1 = _print.GetButton(Print.Buttons.S1);
             if (buttonStateS1 == false)
             {
                 Panel_S1.BackColor = Color.Black;
-                // TODO public funktion zum led setzen in print klasse
-                _print.WriteCommand(CommandByte.ConfigPort0, 0xF0);
             }
             else
             {
@@ -73,6 +72,16 @@ namespace TAP
             {
                 Panel_S4.BackColor = Color.White;
             }
+        }
+
+        private void Panel_S2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Panel_S3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 

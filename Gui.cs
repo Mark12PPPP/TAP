@@ -29,9 +29,9 @@ namespace TAP
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            _print.ReadAdc();
+            _print.ReadAdc(AdcCommands.GET_CH0);
             _print.ReadIoExpander();
-            _print.Ausgabe7Segment(Print.Segment.Led3);
+            _print.Ausgabe7Segment(Segment.Led4);
             _print.SetAllLeds();
             bool buttonStateS1 = _print.GetButton(Print.Buttons.S1);
             if (buttonStateS1 == false)

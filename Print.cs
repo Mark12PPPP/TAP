@@ -7,7 +7,7 @@ namespace TAP
     using Bruker.Synergy.Communication.I2c;
     using Bruker.Synergy.Hardware.Ftdi;
 
-    internal enum CommandByte
+    public enum CommandByte
     {
         ConfigPort0 = 0x06,
         ConfigPort1 = 0x07,
@@ -15,7 +15,19 @@ namespace TAP
         OutputPort0 = 0x02,
         InputPort0 = 0x00,
         InputPort1 = 0x01,
-        ForceSensor = 0x00
+    }
+
+    public enum Segment
+    {
+        Led1 = 0x01,
+        Led2 = 0x02,
+        Led3 = 0x03,
+        Led4 = 0x04,
+        Led5 = 0x05,
+        Led6 = 0x06,
+        Led7 = 0x07,
+        Led8 = 0x08,
+        Led9 = 0x09
     }
 
     public enum Leds
@@ -24,6 +36,12 @@ namespace TAP
         Led2 = 0x20,
         Led3 = 0x40,
         Led4 = 0x80
+    }
+
+    public enum AdcCommands
+    {
+        GET_CH0 = 0X18,
+        GET_CH2 = 0x48
     }
 
     public class Print
@@ -85,19 +103,6 @@ namespace TAP
             WriteCommand(CommandByte.OutputPort1, 0x0F);
         }
 
-        public enum Segment
-        {
-            Led1 = 0x01,
-            Led2 = 0x02,
-            Led3 = 0x03,
-            Led4 = 0x04,
-            Led5 = 0x05,
-            Led6 = 0x06,
-            Led7 = 0x07,
-            Led8 = 0x08,
-            Led9 = 0x09
-        }
-
         public void Ausgabe7Segment(Segment led)
         {
             WriteCommand(CommandByte.OutputPort0, Convert.ToByte(Segment.Led8)); //Hier den Wert vom 7-Segment definieren
@@ -118,16 +123,16 @@ namespace TAP
             return Convert.ToBoolean(zsReadButtonInput[0] & Convert.ToByte(button));
         }
 
-        public byte[] ReadAdc()
+        public byte[] ReadAdc(AdcCommands adcCommands)
         {
-            byte[] readAdcInput = ReadAdcCommand();
-            return readAdcInput;
+              byte[] readAdcInput = ReadAdcCommand(AdcCommands.GET_CH0);
+              return readAdcInput;
         }
 
         public byte[] ReadIoExpander()
         {
-            byte[] readButtonInput = ReadIoCommand(CommandByte.InputPort1, 0x20);
-            return readButtonInput;
+              byte[] readButtonInput = ReadIoCommand(CommandByte.InputPort1, 0x20);
+              return readButtonInput;
         }
 
         private byte[] ReadIoCommand(CommandByte commandRead, int numbOfDataToRead)
@@ -135,9 +140,9 @@ namespace TAP
             return _i2cInterface.WriteRead(_i2cConnectionSettingIo, Convert.ToUInt32(numbOfDataToRead), new byte[] { Convert.ToByte(commandRead) });
         }
 
-        private byte[] ReadAdcCommand()
+        private byte[] ReadAdcCommand(AdcCommands adcCommands)
         {
-            return _i2cInterface.WriteRead(_i2cConnectionSettingAdc, 0x20);
+             return _i2cInterface.WriteRead(_i2cConnectionSettingAdc, 1, Convert.ToByte(adcCommands));
         }
 
         internal void WriteCommand(CommandByte command, params byte[] data)
@@ -146,17 +151,6 @@ namespace TAP
             completeData.Add(Convert.ToByte(command));
             completeData.InsertRange(completeData.Count, data);
             _i2cInterface.Write(_i2cConnectionSettingIo, completeData.ToArray());
-            _i2cInterface.Write(_i2cConnectionSettingAdc, 0x00);
-            //while (true)
-            //{
-            //    try
-            //    {
-            //        _i2cInterface.Write(_i2cConnectionSettingAdc, completeData.ToArray());
-            //    }
-            //    catch
-            //    {
-            //    }
-            //}
         }
     }
 }
